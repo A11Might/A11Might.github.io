@@ -89,9 +89,8 @@ public static int getNum(Deque<String> deque) {
 
 经过value()处理后得到的队列队首一定是数字(若str是以符号 '-' 开头，则返回的队列队首为0；若str是以数字开头，则返回的队列队首为数字)，如 `-1 + 3`，队首为 '-1'，使用getNum()计算时没有问题，但若给定的队列的为 `- 1 + 3`，注意不是`-1 + 3`，队列的第一个元素为符号 '-'， getNum将无法处理，这时可以学习value()的操作，创造 `0 - 1 + 3`，具体如下：
 
-> `-1 + 3`，队首为符号时，处理为`0 - 1 + 3`
->
-> `1 + 3`， 队首为数字时，处理为`0 + 1 + 3`
+{: .box-note}
+`-1 + 3`，队首为符号时，处理为`0 - 1 + 3` </br> `1 + 3`， 队首为数字时，处理为`0 + 1 + 3`
 
 ```java
 public static int getNumPlus(Deque<String> deque) {
@@ -117,7 +116,7 @@ public static int getNumPlus(Deque<String> deque) {
 
 1、双端队列
 
-![_config.yml]({{ site.baseurl }}/images/deque.png)
+![Crepe](/img/post/deque.png){: .center-block :}
 
 2、[题解](https://github.com/A11Might/SomePracticeCode/blob/master/highClass/GetValue.java)
 
