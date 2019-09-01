@@ -264,8 +264,7 @@ public void preorderTraversal(TreeNode root) {
 
 在Morris遍历中，第二次遇到当前节点时打印当前节点，则为中序遍历
 
-{: .box-note}
-特殊的，当前节点无左孩子时，遍历到当前节点时相当于一次遍历了节点两次
+> 特殊的，当前节点无左孩子时，遍历到当前节点时相当于一次遍历了节点两次
 
 ```java
 public void inorderTraversal(TreeNode root) {
