@@ -120,7 +120,7 @@ if __name__ == '__main__':
 
 运行结果：没有智孝还在保种的电影
 
-![_config.yml]({{ site.baseurl }}/images/ruisi-namesearch.PNG)
+![Crepe](/img/post/ruisi-namesearch.png){: .center-block :}
 
 ### 总结
 
