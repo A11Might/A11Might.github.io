@@ -180,19 +180,15 @@ public void postorderTraversal(TreeNode root) {
 
 二叉树中的节点含有空闲的空指针，在遍历节点时将特定空指针指向当前遍历的节点，用于之后返回当前节点位置，将之前迭代遍历中手动压栈所需O(h)(h为二叉树的高度)的额外空间复杂度降为O(1)，具体操作如下
 
-> 将当前节点记为cur
->
-> 1、如果cur无左孩子，cur向右移动
->
-> 2、如果cur有左孩子，找到cur左孩子最右的节点，记为mostRight
->
->       a、如果mostRight.right指针指向null，让其指向cur，cur向左移动
->
->       b、如果mostRight.right指针指向cur，让其指回null，cur向右移动
->
-> 3、如果cur为空，morris遍历结束
+{: .box-note}
+将当前节点记为cur
+1、如果cur无左孩子，cur向右移动
+2、如果cur有左孩子，找到cur左孩子最右的节点，记为mostRight
+       a、如果mostRight.right指针指向null，让其指向cur，cur向左移动
+       b、如果mostRight.right指针指向cur，让其指回null，cur向右移动
+3、如果cur为空，morris遍历结束
 
-![_config.yml]({{ site.baseurl }}/images/morris.png)
+![Crepe](/img/post/morris.png){: .center-block :}
 
 ```java
 public void preorderTraversal(TreeNode root) {
@@ -264,7 +260,8 @@ public void preorderTraversal(TreeNode root) {
 
 在Morris遍历中，第二次遇到当前节点时打印当前节点，则为中序遍历
 
-> 特殊的，当前节点无左孩子时，遍历到当前节点时相当于一次遍历了节点两次
+{: .box-note}
+特殊的，当前节点无左孩子时，遍历到当前节点时相当于一次遍历了节点两次
 
 ```java
 public void inorderTraversal(TreeNode root) {
@@ -300,7 +297,7 @@ public void inorderTraversal(TreeNode root) {
 
 在Morris遍历中， `真第二次` 遇到当前节点时逆序打印当前节点左子树的右边界(当前节点无左孩子时，遍历到当前节点时相当于一次遍历了节点两次，但其没有左子树的右边界，无需打印)，函数退出前打印整棵树的右边界，则为后序遍历
 
-![_config.yml]({{ site.baseurl }}/images/postmorris.png)
+![Crepe](/img/post/postmorris.png){: .center-block :}
 
 ```java
 public List<Integer> postorderTraversal(TreeNode root) {
