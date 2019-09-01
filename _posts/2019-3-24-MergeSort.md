@@ -45,7 +45,7 @@ public static int smallSumSure1(int[] arr) {
 
 先来看看归并排序，原理是将待排序列分为两个子序列，分别排序后，将两个有序子序列合并。在两个子序列S、M合并过程中，当S中元素A小于M中元素B时，因为M序列已经有序，所以不用比较，A一定是S、M两个子序列剩余元素中最小的元素，这省去了A与B后其他元素比较的操作。
 
-![_config.yml]({{ site.baseurl }}/images/xche.jpg)
+![Crepe](/img/post/xche.jpg){: .center-block :}
 
 那小和问题怎么省去多余的比较操作？将原本题目反过来想：当前元素右侧序列每有一个比其大的元素，就有一个左边比当前数小的数即当前元素，维护一个变量res将其累加，如下：
 
@@ -210,6 +210,6 @@ public static int smallSum2(int[] arr) {
 
 不能，归并排序中 `<=` 作用为保持排序的稳定性；小和问题中 `<` 作用为计算有多少个大于a的数。
 
-![_config.yml]({{ site.baseurl }}/images/xche2.jpg)
+![Crepe](/img/post/xche2.jpg){: .center-block :}
 
 - [源码](https://github.com/A11Might/SomePracticeCode/blob/master/learningCode/SmallSum.java)
