@@ -18,6 +18,4 @@ Welcome to leave me messages.
 
 ## Skill Keywords
 
-<button class="btn btn-outline" type="button">{Java}</button>
-
-<button class="btn btn-outline" type="button">{Python}</button>
+<button class="btn btn-outline" type="button">Java</button> <button class="btn btn-outline" type="button">Python</button>
