@@ -98,7 +98,7 @@ if __name__ == '__main__':
 ```
 
 运行结果：
-![_config.yml]({{ site.baseurl }}/images/baidu_one_page.png)
+![Crepe](/img/post/baidu_one_page.png){: .center-block :}
 
 #### 第二步：爬取贴吧精品栏中所有帖子的图片
 目标帖子URL：<https://tieba.baidu.com/f?kw=%E6%88%91%E7%9A%84%E8%8B%B1%E9%9B%84%E5%AD%A6%E9%99%A2&ie=utf-8&tab=good>
@@ -147,7 +147,7 @@ if __name__ == '__main__':
 ```
 
 运行结果：
-![_config.yml]({{ site.baseurl }}/images/baidu_all_page.png)
+![Crepe](/img/post/baidu_all_page.png){: .center-block :}
 
 #### 总结：
 其实只是简单爬取了我的英雄学院贴吧精品栏中帖子前缀名是*【雄英支援科】* 的所有帖子中的漫画图片，并按帖子名称分文件夹保存。
