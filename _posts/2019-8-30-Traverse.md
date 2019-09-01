@@ -186,9 +186,9 @@ public void postorderTraversal(TreeNode root) {
 >
 > 2、如果cur有左孩子，找到cur左孩子最右的节点，记为mostRight
 >
->       a、如果mostRight.right指针指向null，让其指向cur，cur向左移动
->
->       b、如果mostRight.right指针指向cur，让其指回null，cur向右移动
+>> a、如果mostRight.right指针指向null，让其指向cur，cur向左移动
+>>
+>> b、如果mostRight.right指针指向cur，让其指回null，cur向右移动
 >
 > 3、如果cur为空，morris遍历结束
 
