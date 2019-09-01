@@ -10,9 +10,11 @@ Welcome to leave me messages.
 
 ## Contact Me
 
-- [qihanghu@foxmail.com](mailto:qihanghu@foxmail.com)
+- Github: [A11Might](https://github.com/A11Might)
 
-- [A11Might](https://github.com/A11Might)
+
+- E-mail: [qihanghu@foxmail.com](mailto:qihanghu@foxmail.com)
+
 
 ## Skill Keywords
 
