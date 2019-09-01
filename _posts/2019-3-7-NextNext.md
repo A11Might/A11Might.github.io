@@ -41,7 +41,7 @@ class Solution {
 
 在上述实现中 `p.next.next = p;` 的作用是将当前节点 `p` 后继节点 `p.next` 的后继 `p.next.next` 变为当前节点 `p` 自己，如下图
 
-![_config.yml]({{ site.baseurl }}/images/nextnext1.png)
+![Crepe](/img/post/nextnext1.png){: .center-block :}
 
 ### 二、双指针
 
@@ -108,7 +108,7 @@ class Solution {
 
 1、在使用快慢指针的时候需要注意边界条件，若使用不当则可能出现空指针报错。判断是否到达边界的条件是 `fast != null` 和 `fast.next != null` ,如下图
 
-![_config.yml]({{ site.baseurl }}/images/nextnext2.png)
+![Crepe](/img/post/nextnext2.png){: .center-block :}
 
 2、 `if(fast == null || fast.next == null)` 和 `while(fast != null && fast.next != null)` ？
 
