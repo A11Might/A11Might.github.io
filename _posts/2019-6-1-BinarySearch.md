@@ -51,13 +51,13 @@ public static int binarySearch(int[] nums, int target) {
 
 - 数学归纳法：假设不变性一直保持至(a)，以下无非两种情况
 
-![_config.yml]({{ site.baseurl }}/images/binarySearch1.png)
+![Crepe](/img/post/binarysearch1.JPG){: .center-block :}
 
 #### b. 单调性：显而易见
 
 - 最终lo = hi，将有序数组分为：<= target 和 target <，返回lo - 1即为不大于target的最后一个元素的下标
 
-![_config.yml]({{ site.baseurl }}/images/binarySearch2.png)
+![Crepe](/img/post/binarysearch2.JPG){: .center-block :}
 
 ### 5. leetcode 34
 
