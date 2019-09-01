@@ -20,6 +20,7 @@ description: Now or Never
 
 # List of links in the navigation bar
 navbar-links:
+  Home: "index"
   Tags: "tags"
   About Me: "aboutme"
 #   Resources:
