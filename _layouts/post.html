@@ -4,6 +4,7 @@ layout: base
 
 {% include header.html type="post" %}
 
+<section class="collection-head small geopattern" data-pattern-id="{{ page.title | truncate: 15, ''}}">
 <div class="container">
   <div class="row">
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
@@ -83,3 +84,4 @@ layout: base
     {% include sidebar-post-nav.html %}
   </div>
 </div>
+</section>
