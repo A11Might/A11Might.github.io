@@ -180,13 +180,17 @@ public void postorderTraversal(TreeNode root) {
 
 二叉树中的节点含有空闲的空指针，在遍历节点时将特定空指针指向当前遍历的节点，用于之后返回当前节点位置，将之前迭代遍历中手动压栈所需O(h)(h为二叉树的高度)的额外空间复杂度降为O(1)，具体操作如下
 
-{: .box-note}
-将当前节点记为cur
-1、如果cur无左孩子，cur向右移动
-2、如果cur有左孩子，找到cur左孩子最右的节点，记为mostRight
-       a、如果mostRight.right指针指向null，让其指向cur，cur向左移动
-       b、如果mostRight.right指针指向cur，让其指回null，cur向右移动
-3、如果cur为空，morris遍历结束
+> 将当前节点记为cur
+>
+> 1、如果cur无左孩子，cur向右移动
+>
+> 2、如果cur有左孩子，找到cur左孩子最右的节点，记为mostRight
+>
+>       a、如果mostRight.right指针指向null，让其指向cur，cur向左移动
+>
+>       b、如果mostRight.right指针指向cur，让其指回null，cur向右移动
+>
+> 3、如果cur为空，morris遍历结束
 
 ![Crepe](/img/post/morris.png){: .center-block :}
 
