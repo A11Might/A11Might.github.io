@@ -4,25 +4,18 @@ title: About me
 subtitle: Why you'd want to go on a date with me
 ---
 
-我是胡启航，这是我的个人博客。
+My name is Qihang Hu. This is my blog, i will note something here.
 
-随便写写七七八八的东西。
+Welcome to leave me messages.
 
-欢迎给我留言。
+## Contact Me
 
-## 联系
+- [qihanghu@foxmail.com](mailto:qihanghu@foxmail.com)
 
-{% for website in site.data.social %}
-* {{ website.sitename }}：[@{{ website.name }}]({{ website.url }})
-{% endfor %}
+- [A11Might](https://github.com/A11Might)
 
 ## Skill Keywords
 
-{% for category in site.data.skills %}
-### {{ category.name }}
-<div class="btn-inline">
-{% for keyword in category.keywords %}
-<button class="btn btn-outline" type="button">{{ keyword }}</button>
-{% endfor %}
-</div>
-{% endfor %}
+<button class="btn btn-outline" type="button">{Java}</button>
+
+<button class="btn btn-outline" type="button">{Python}</button>
