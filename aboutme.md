@@ -4,13 +4,25 @@ title: About me
 subtitle: Why you'd want to go on a date with me
 ---
 
-My name is Inigo Montoya. I have the following qualities:
+我是胡启航，这是我的个人博客。
 
-- I rock a great mustache
-- I'm extremely loyal to my family
+随便写写七七八八的东西。
 
-What else do you need?
+欢迎给我留言。
 
-### my history
+## 联系
 
-To be honest, I'm having some trouble remembering right now, so why don't you just watch [my movie](http://en.wikipedia.org/wiki/The_Princess_Bride_%28film%29) and it will answer **all** your questions.
+{% for website in site.data.social %}
+* {{ website.sitename }}：[@{{ website.name }}]({{ website.url }})
+{% endfor %}
+
+## Skill Keywords
+
+{% for category in site.data.skills %}
+### {{ category.name }}
+<div class="btn-inline">
+{% for keyword in category.keywords %}
+<button class="btn btn-outline" type="button">{{ keyword }}</button>
+{% endfor %}
+</div>
+{% endfor %}
