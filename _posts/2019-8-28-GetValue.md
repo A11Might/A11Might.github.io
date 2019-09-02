@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 字符串表达式求解
-tags: [codinginterview]
+tags: [algorithm]
 ---
 
 给定一个字符串str，str表示一个公式，公式里可能有整数，加减乘除符号和左右括号，返回公式的计算结果
