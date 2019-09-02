@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 二叉树的遍历
-tags: [codinginterview]
+tags: [algorithm]
 ---
 
 二叉树的遍历分为深度优先遍历和广度优先遍历。
