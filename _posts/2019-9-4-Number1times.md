@@ -4,7 +4,7 @@ title: 从[1, n]的整数中1出现的次数
 tsgs: [codinginterview]
 ---
 
-剑指offer[43]
+剑指offer第43题
 
 > 输入一个整数n，求从1到n这n个整数的十进制表示中1出现的次数
 > 
@@ -21,9 +21,9 @@ tsgs: [codinginterview]
 
 举例n为534，weight为个位4时，pre部分为53，succ部分没有
 
-![Crepe](./img/post/onetimes1.jpg)
+![Crepe](./img/post/onetimes1.jpg){: .center-block :}
 
-当weight固定为1时，pre部分有53种情况，分别为[0, 52] (单独考虑53的情况)，succ部分只有1种情况(没有东西)，所以当前位置weight为1时至少有53种情况(53 * 1)
+pre部分有53种情况，分别为[0, 52] (单独考虑53的情况)，succ部分只有1种情况(没有东西)，所以当前位置weight为1时至少有53种情况(53 * 1)
 
 上述统计完[0, 529]中个位出现1的次数，接着统计[530, 534]中个位出现1的次数，即考虑当pre部分为53的情况
 
@@ -41,9 +41,9 @@ tsgs: [codinginterview]
 
 n为534，当weight为百位3时，pre部分变为5，succ部分变为为4
 
-![Crepe](./img/post/onetimes2.jpg)
+![Crepe](./img/post/onetimes2.jpg){: .center-block :}
 
-当weight固定为1时，pre部分有5中情况，分别为[0, 4] (单独考虑5的情况)，succ部分有10种情况，分别为[0, 9] (即base种情况，base为当前位置weight的权值)，所以当weight为1时至少有50种情况(5 * 10)，接着考虑当pre部分为5的情况
+pre部分有5中情况，分别为[0, 4] (单独考虑5的情况)，succ部分有10种情况，分别为[0, 9] (即base种情况，base为当前位置weight的权值)，所以当weight为1时至少有50种情况(5 * 10)，接着考虑当pre部分为5的情况
 
 当pre部分为5时
 
@@ -59,7 +59,7 @@ n为534，当weight为百位3时，pre部分变为5，succ部分变为为4
 
 #### d、总结
 
-![Crepe](./img/post/onetimes3.jpg)
+![Crepe](./img/post/onetimes3.jpg){: .center-block :}
 
 把weight作为中间部分，将n分割为前半部分pre和后半部分succ，前半部分有pre + 1中情况，分别为[0, pre]；后半部分有base种情况，分别为[0, base - 1] (base为当前位置weight的权值)，所以当前位置weight上出现1的次数至少为pre * base
 
