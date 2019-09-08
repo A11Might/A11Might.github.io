@@ -80,3 +80,7 @@ public int minSubArrayLen(int s, int[] nums) {
     return res;
 }
 ```
+
+### 3、参考
+
+- 玩转算法面试 - 波波老师
