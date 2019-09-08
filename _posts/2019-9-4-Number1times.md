@@ -1,7 +1,7 @@
 --- 
 layout: post
 title: 从[1, n]的整数中1出现的次数
-tsgs: [codinginterview]
+tags: [codinginterview]
 ---
 
 剑指offer第43题
