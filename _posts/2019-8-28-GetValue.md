@@ -16,7 +16,7 @@ tags: [algorithm]
 
 #### 1、简化题目
 
-先考虑没有括号的情况，即给定一个字符串str，str表示一个公式，公式里可能有 `正整数` 和加减乘除但 `没有左右括号` ，返回公式的计算结果
+先考虑没有括号的情况，即给定一个字符串str，str表示一个公式，公式里可能有整数和加减乘除但 `没有左右括号` ，返回公式的计算结果
 
 由简化后的题目，假设计算的是 `1 + 2 * 3 - 8 / 4`，乘除的运算优先级高于加减，先算乘除得 `1 + 6 - 2`，后算加减得 `5`
 
@@ -115,11 +115,11 @@ public static int getNumPlus(Deque<String> deque) {
 
 ## 二、题解
 
-1、双端队列
+#### 1、双端队列
 
 ![Crepe](/img/post/deque.png){: .center-block :}
 
-2、[题解](https://github.com/A11Might/SomePracticeCode/blob/master/highClass/GetValue.java)
+#### 2、[题解](https://github.com/A11Might/SomePracticeCode/blob/master/highClass/GetValue.java)
 
 再回过头来看题目，给定一个字符串str，str表示一个公式，公式里可能有整数，加减乘除符号和左右括号，返回公式的计算结果，将原公式看做一个大括号中的公式，中间可能嵌套着其他括号，在遇到嵌套的括号时，递归调用value()计算括号内公式的值，直接返回替换掉括号内的公式即可
 
