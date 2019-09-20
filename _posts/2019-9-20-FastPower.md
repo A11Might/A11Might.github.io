@@ -46,7 +46,7 @@ public double Power(double base, int exponent) {
 
 n的二进制最后一位对应的值是a，倒数第二位对应的是a ^ 2，倒数第三位(a ^ 2) ^ 2，以此类推
 
-设结果初始值为res = 1.0，若n的二进制位上数为1，则将result乘以该位对应值；若n的二进制位上数为0，则将result乘以1，最终结果即为答案
+设结果初始值为res = 1.0，若n的二进制当前位上数为1，则将result乘以该位对应值；若n的二进制当前位上数为0，则将result乘以1，最终结果即为答案
 
 ```java
 public double Power(double base, int exponent) {
