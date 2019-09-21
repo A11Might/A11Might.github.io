@@ -21,7 +21,8 @@ description: My blog
 # List of links in the navigation bar
 navbar-links:
   Home: "index"
-  Tags: "tags"
+  Tags: 
+    - All: "http://www.huqihh.com/tags/"
     - Algorithm: "http://www.huqihh.com/tags/#algorithm"
     - CodingInterview: "http://www.huqihh.com/tags/#codinginterview"
     - LeetCode: "http://www.huqihh.com/tags/#leetcode"
