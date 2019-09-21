@@ -22,6 +22,9 @@ description: My blog
 navbar-links:
   Home: "index"
   Tags: "tags"
+    - Algorithm: "http://www.huqihh.com/tags/#algorithm"
+    - CodingInterview: "http://www.huqihh.com/tags/#codinginterview"
+    - LeetCode: "http://www.huqihh.com/tags/#leetcode"
   About Me: "aboutme"
 #   Resources:
 #     - Beautiful Jekyll: "http://deanattali.com/beautiful-jekyll/"
