@@ -23,9 +23,10 @@ navbar-links:
   Home: "index"
   Tags: 
     - All: "http://www.huqihh.com/tags/"
+    - Daily: "http://www.huqihh.com/tags/#daily"
+    - LeetCode: "http://www.huqihh.com/tags/#leetcode"
     - Algorithm: "http://www.huqihh.com/tags/#algorithm"
     - CodingInterview: "http://www.huqihh.com/tags/#codinginterview"
-    - LeetCode: "http://www.huqihh.com/tags/#leetcode"
   About Me: "aboutme"
 #   Resources:
 #     - Beautiful Jekyll: "http://deanattali.com/beautiful-jekyll/"
