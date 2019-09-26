@@ -4,6 +4,8 @@ title: 二叉树的重构
 tag: [algorithm, leetcode, codinginterview]
 ---
 
+
+
 ## 1. 重构
 
 任何一个二叉树都可以导出三个序列，分别是先序、中序和后序遍历序列，这三个序列长度相同，都是由树中所有节点，依照对应的遍历策略确定的次序排列而成。若已知树的遍历序列，如何忠实的还原出树的拓扑结构。
@@ -24,7 +26,7 @@ tag: [algorithm, leetcode, codinginterview]
 
     - 由先序遍历序列可知树的根节点，进而在中序遍历序列中对该节点进行定位，找到左子树对应的中序遍历子序列和右子树对应的中序遍历子序列，即可以知道左子树和右子树分别有哪些节点组成，反过来将先序遍历序列中左子树和右子树对应的子序列切分开，这样就将全树的重构问题化简为两棵子树的重构问题，这两课子树在规模上都符合归纳假设，严格小于N，因此根据归纳假设左子树和右子树都可以如此重构出来，假设成立
 
-![Crepe](https://github.com/A11Might/A11Might.github.io/blob/master/img/post/reconstruct1.jpg){: .center-block :}
+![Crepe](https://github.com/A11Might/A11Might.github.io/blob/master/img/post/reconstruct1.jpg)
 
 #### 剑指offer[7]/leetcode[105] [题解](https://github.com/A11Might/codingInterview/blob/master/code/offer07.java)
 
@@ -72,7 +74,7 @@ public class Solution {
 
 非退化的真二叉树，左子树和右子树要么同时为空，要么同时非空，前一种情况显而易见，不妨假设它们都存在，其先序遍历序列首先出现的是根节点，其后是以左子树根节点引领的左子树遍历子序列，再接下来右子树根节点引领的右子树遍历子序列；而后序遍历序列必然是以根节点收尾，往前是以右子树根节点收尾的右子树遍历子序列，再往前以左子树树根收尾的左子树的遍历子序列
 
-![Crepe](https://github.com/A11Might/A11Might.github.io/blob/master/img/post/reconstruct2.jpg){: .center-block :}
+![Crepe](https://github.com/A11Might/A11Might.github.io/blob/master/img/post/reconstruct2.jpg)
 
 - 左子树的根节点l是先序遍历序列中的第二个节点，在任何给定的先序遍历序列中都可以快速的找到它，进而在后序遍历序列中对其定位，l节点在它所属的左子树的后序遍历子序列中垫后，这样可以明确的在后序遍历序列中界定左右子树的范围
 
