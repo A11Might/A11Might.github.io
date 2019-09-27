@@ -24,6 +24,10 @@ tags: [algorithm, leetcode, codinginterview]
 
 ![Crepe](/img/post/reconstruct1.jpg){: .center-block :}
 
+
+{: .box-note}
+**Note:** 想当然的将后序遍历序列中根节点的位置直接映射到前序遍历序列中，进而切分左右子树是错误的，应该根据子树的个数切分左右子树
+
 #### 剑指offer[7]/leetcode[105] [题解](https://github.com/A11Might/codingInterview/blob/master/code/offer07.java)
 
 > 从前序与中序遍历序列构造二叉树
@@ -54,9 +58,6 @@ public class Solution {
     }
 }
 ```
-
-{: .box-note}
-**Note:** 想当然的将后序遍历序列中根节点的位置直接映射到前序遍历序列中，进而切分左右子树是错误的，应该根据子树的个数切分左右子树
 
 ## 2. 先序 + 后序
 
