@@ -25,7 +25,7 @@ tags: [codinginterview]
 
         - 若不是，继续下上寻找其曾祖父节点...
         
-        - 直至当前节点为空，节点node无后继节点
+        - 直至节点为空，节点node无后继节点
 
 ![Crepe](/img/post/succnode.jpg){: .center-block :}
 
