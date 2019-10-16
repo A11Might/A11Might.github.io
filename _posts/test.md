@@ -11,8 +11,6 @@
     - [1.5 IoC(控制反转)](#IoC(控制反转))
     - [1.6 AOP(面向切面编程)](#AOP(面向切面编程))
 
-----
-
 - Part II
 
     - [2.1 数据库字段的设计](#数据库字段的设计)
@@ -20,8 +18,6 @@
     - [2.3 数据库操作(CRUD)](#数据库操作(CRUD))
     - [2.4 MyBatis](#MyBatis)
     - [2.5 ViewObject](#ViewObject)
-
-----
 
 - Part III
 
