@@ -1,556 +1,182 @@
-# Document
+# 目录：
 
 <!-- TOC -->
 
-- Part I
+- [document](/document.md)
 
-    - [1.1 最简单的服务器](#最简单的服务器)
-    - [1.2 request/response](#request/response)
-    - [1.3 重定向](#重定向)
-    - [1.4 Error](#Error)
-    - [1.5 IoC(控制反转)](#IoC(控制反转))
-    - [1.6 AOP(面向切面编程)](#AOP(面向切面编程))
+- [一、注册与登录的实现](#注册与登录的实现)
 
-- Part II
+- [二、发布问题和敏感词过滤](#发布问题和敏感词过滤)
 
-    - [2.1 数据库字段的设计](#数据库字段的设计)
-    - [2.2 数据库创建](#数据库创建)
-    - [2.3 数据库操作(CRUD)](#数据库操作(CRUD))
-    - [2.4 MyBatis](#MyBatis)
-    - [2.5 ViewObject](#ViewObject)
+- [三、发表评论和站内信](#发表评论和站内信)
 
-- Part III
+- [四、赞踩实现](#赞踩实现)
 
-    - [3.1 interceptor(拦截器)](#拦截器(interceptor))
-    - [3.2 Ajax请求](#Ajax请求)
-    - [3.3 敏感词过滤](#敏感词过滤)
-    - [3.4 多线程](#多线程)
-    - [3.5 redis](#redis)
+- [五、异步消息机制与邮件发送](#异步消息机制与邮件发送)
+
+- [六、关注和被关注服务实现](#关注和被关注服务实现)
+
+- [七、timeline](#timeline)
 
 <!-- /TOC -->
 
-#### 最简单的服务器
+## 注册与登录的实现
 
-![img](https://github.com/A11Might/A11Might.github.io/blob/master/img/nowcoder2016/1_1.jpg)
+#### 注册
 
-通过Controller定义网页入口，在网页入口指定访问地址，访问方法，通过访问地址和请求可以解析参数，有两种返回方式
+将用户输入用户名和密码提交至服务器，服务器入库。在入库前需要判断，用户名的合法性(长度，敏感词，重复，特殊字符等)，密码长度及组成
 
-- 直接返回字符串
+- 为了对用户信息负责，在用户注册时，随机生成该用户的 salt ，将用户密码 salt 加密(加密 [password + salt] )后存入数据库，数据库中不会存储用户明文密码
 
-```java
-@RequestMapping(path = {"/profile/{groupId}/{userId}"})
-@ResponseBody
-public String profile(@PathVariable("userId") int userId, // 解析地址中的参数(/userId)
-                      @PathVariable("groupId") String groupId,
-                      @RequestParam(value = "type", defaultValue = "1") int type, // 解析请求的参数(?type=2)
-                      @RequestParam(value = "key", required = false) String key) {
-    return String.format("Profile Page of %s / %d, t:%d k: %s", groupId, userId, type, key);
-}
-```
+    - 明文存储用户密码是对用户信息的不负责
 
-- 渲染模板返回
+    - 密码直接加密存储，数据库脱库后可能会被人撞库(社工库，常用密码事先加密入库，解密时直接在库中查找)
 
-```java
-@RequestMapping(path = {"/vm"}, method = {RequestMethod.GET})
-public String template(Model model) { // model将数据传递到模板中
-    model.addAttribute("value1", "vvvvv1");
-    List<String> colors = Arrays.asList(new String[]{"RED", "GREEN", "BLUE"});
-    model.addAttribute("colors", colors);
+- 为了防止恶意脚本注册，可以设置用户邮件/短信激活
 
-    Map<String, String> map = new HashMap<>();
-    for (int i = 0; i < 4; ++i) {
-        map.put(String.valueOf(i), String.valueOf(i * i));
-    }
-    model.addAttribute("map", map);
-    model.addAttribute("user", new User("LEE"));
-    return "home";
-}
-```
+#### 登录/登出
 
+- 登录
 
-#### request/response
+新建数据表 login_ticket 用来存储 ticket 字段。该字段在注册或用户登录成功时随机生成并与用户关联后存入数据库，同时添加进浏览器的 Cookie 中
 
-HttpServletRequest、HttpServletResponse是网页请求request和服务器返回信息response的包装
+ticket 既不是密码，也不是密码加密后的数据，也不是userId，是一个随机生成的 UUID 字符串，有过期时间以及有效状态
 
-- request
+- 登出
 
-    参数解析、cookie读取、http请求字段、文件上传
+将数据库中该用户对应的ticket过期
 
-- HttpServletRequest
+#### 页面访问
 
-    request.getHeaderNames();request.getMethod();request.getPathInf();request.getQueryString()
+在访问页面时，浏览器将 cookie 中 ticket 发送给服务器验证(带 token 的 http 请求)，服务器通过 ticket 字段获取 ticket 的具体信息(过期时间，是否有效)以及关联用户id(可以获取用户的具体信息)，根据用户和页面访问权限进行页面渲染或者页面跳转
 
-- response
+具体实现分为
 
-    页面内容返回、cookie下发、http字段设置(headers)
+- 面向切面编程(AOP)
 
-- HttpServletResponse
+- 拦截器(interceptor)
 
-    response.addCookie(new Cookie(key, value));response.addHeader(key, value);
+    使用拦截器( preHandle )来拦截所有浏览器请求，判断请求中是否存在有效的 ticket，如果有就获取关联用户信息并写入 Threadlocal(本地线程：当前变量每个线程都有一份拷贝，通过统一的接口访问)。所有线程的 threadlocal 都被存在一个叫做 hostholder 的实例中，根据该实例就可以在全局任意位置(controller, service...中)获取当前登录用户的信息
 
-#### 重定向
+#### 未登录跳转next
 
-- http状态码301：永久重定向，意为旧的URL已经不在使用，已永久转移至新的地址
+使用拦截器( preHandle )判断用户是否登录，若该页面强制登录但用户未登录，则直接跳转至登录页面，并将当前页面url作为参数传递过去，在用户登录后再跳回当前页面
 
-    永久跳转会从缓存中读取后跳转
+## 二、发布问题和敏感词过滤
 
-- http状态吗302：临时重定向，意为某个时间段因为某些原因临时进行的跳转行为，旧的URL地址依然使用并存在
+#### 发布问题
 
-    重定向，通过redirect前缀跳转过去(默认是302临时跳转)
+发布问题时检查标题和内容(UGC，用户生成内容)，防止 xss 注入，并且过滤敏感词，后存入数据库
 
-```java
-@RequestMapping(path = {"/redirect/{code}"}, method = {RequestMethod.GET})
-    public String redirect(@PathVariable("code") int code) {
-        return "redirect:/";
-    }
-```
-
-#### Error
-
-定义一个ExceptionHandler，抛出异常时，进行统一的异常处理
-
-```java
-// Spring MVC外的Exception或Spring MVC没有处理的Exception
-@ExceptionHandler()
-@ResponseBody
-public String error(Exception e) {
-    return "ERROR:" + e.getMessage();
-}
-```
-
-#### IoC(控制反转)
-
-无需关注变量的初始化，只要使用注解表示其是来自bean池对象的初始化，就会自动设置上
-
-```java
-@Autowired
-PassportInterceptor passportInterceptor;
-```
-
-#### AOP(面向切面编程)
-
-面向切面，所有业务都要处理的业务
-
-![img](https://github.com/A11Might/A11Might.github.io/blob/master/img/nowcoder2016/1_6.jpg)
-
-```java
-@Aspect
-@Component
-public class LogAspect {
-    private static final Logger logger = LoggerFactory.getLogger(LogAspect.class);
-
-    // 通配符'*'，可以代表任何东西
-    // '*'是返回值 com.nowcoder.controller.*Controller是类 *(..)方法以及一些参数
-    // @Before是在执行所有Controller中方法之前执行这个方法
-    @Before("execution(* com.nowcoder.controller.*Controller.*(..))")
-    public void beforeMethod(JoinPoint joinPoint) {
-        StringBuilder sb = new StringBuilder();
-        for (Object arg : joinPoint.getArgs()) {
-            if (arg != null) {
-                sb.append("arg:" + arg.toString() + "|");
-            }
-        }
-        logger.info("before method:" + sb.toString());
-    }
-
-    // @After是在执行所有IndexController中方法之后执行这个方法
-    @After("execution(* com.nowcoder.controller.IndexController.*(..))")
-    public void afterMethod() {
-        logger.info("after method" + new Date());
-    }
-}
-```
-
-#### 数据库字段的设计
-
-| id | name | password | salt | head_url |
-|-----|-----|-----|-----|-----|
-| 1 | Jim | ajsdf83d | kd8 | http://xx |
-| 2 | Tom | adsf9nfd | xdi | http://yy |
-| 3 | Lucy | gf2jnfpof | daf | http://zz |
-
-关系型数据库中存储的是一张一张的表，每张表对应一种实体(用户，问题或者评论...)，如上为用户表，用于存储每一个用户的信息
-
-- 每一行是一个实体(某一个用户)，对应数据库中的一条记录
-
-- 每一列是实体的具体信息，如上用户表，包含用户姓名，密码，salt和头像
-
-#### 数据库创建
-
-使用workbrench图形化界面创建
-
-int 整数类型；varchar(n) 可变字符；datetime 日期类型；float(m, d) 浮点类型；text 长字符串
-
-#### 数据库操作（CRUD）
-
-```sql
-# 增
-INSERT INTO table_name (列1, 列2,...) VALUES (值1, 值2,....)
-# 查
-SELECT */列名称/多个列名称 FROM 表名称
-# 改
-UPDATE 表名称 SET 列名称 = 新值 WHERE 列名称 = 某值
-# 删
-DELETE FROM 表名称 WHERE 列名称 = 值
-```
-
-```sql
-# 选择语句
-WHERE {CONDITION}
-# 排序 升序/降序
-ORDER BY {COL} ASC/DESC
-# 分页
-LIMIT {OFFSET},{COUNT}
-# groups rows that have the same values into summary rows
-GROUP BY {COL}
-```
-
-```sql
-# 嵌套
-select * from (select * from message order by created_date desc) tt group by conversatoin_id
-# 返回指定列的值的数目
-SELECT COUNT(column_name) FROM table_name
-```
-
-#### MyBatis
-
-- 注解配置
-
-```java
-@Mapper
-public interface UserDAO {
-    String TABLE_NAME = " user ";
-    String INSERT_FIELDS = " name, password, salt, head_url ";
-    String SELECT_FIELDS = " id, " + INSERT_FIELDS;
-
-    @Insert({"insert into ", TABLE_NAME, "(",  INSERT_FIELDS,
-            ") values (#{name},#{password},#{salt},#{headUrl})"})
-    int addUser(User user);
-
-    @Select({"select ", SELECT_FIELDS, " from ", TABLE_NAME, " where id=#{id}"})
-    User selectUserById(int id);
-
-    @Select({"select ", SELECT_FIELDS, " from ", TABLE_NAME, " where name=#{name}"})
-    User selectUserByName(String name);
-
-    @Update({"update ", TABLE_NAME, " set password=#{password} where id=#{id}"})
-    void updatePassword(User user);
-
-    @Delete({"delete from ", TABLE_NAME, " where id=#{id}"})
-    void deleteById(int id);
-}
-```
-
-- XML配置
-
-    - 在相同的包目录下定义的同名XML
-
-    - XML相较于注解可以做一些简单的逻辑操作
-
-```java
-List<Question> selectLatestQuestions(@Param("userId") int userId,
-                                     @Param("offset") int offset,
-                                     @Param("limit") int limit);
-```
-
-```xml
-<mapper namespace="com.nowcoder.dao.QuestionDAO">
-    <sql id="table">question</sql>
-    <sql id="selectFields">id, title, content, comment_count,created_date,user_id
-    </sql>
-    <select id="selectLatestQuestions" resultType="com.nowcoder.model.Question">
-        SELECT
-        <include refid="selectFields"/>
-        FROM
-        <include refid="table"/>
-
-        <if test="userId != 0">
-            WHERE user_id = #{userId}
-        </if>
-        ORDER BY id DESC
-        LIMIT #{offset},#{limit}
-    </select>
-</mapper>
-```
-
-#### ViewObject
-
-使用vo整合实体(如问题)以及该实体相关信息(如发问题用户的信息和当前问题关注数)一并传递给模板
-
-```java
-public class ViewObject {
-    private Map<String, Object> objs = new HashMap<>();
-
-    public void set(String key, Object value) {
-        objs.put(key, value);
-    }
-
-    public Object get(String key) {
-        return objs.get(key);
-    }
-}
-```
-
-#### 拦截器(interceptor)
-
-拦截器在链路上设置回调接口，所有的请求都会回调注册过的拦截器(相较于切面编程的好处是相关请求request和response等都已经包装好了)
-
-![img](https://github.com/A11Might/A11Might.github.io/blob/master/img/nowcoder2016/3_1.jpg)
-
-```java
-public class PassportInterceptor implements HandlerInterceptor{
-    // preHandle在处理controller前走拦截器，用于判断当前用户是否有权限访问当前页面
-    boolean preHandle(HttpServletRequest var1, HttpServletResponse var2, Object var3) throws Exception;
-    // 可以在拦截器中，直接返回false，结束该请求(controller之前就结束了)，用于请求提前返回，进行异常处理
-
-    // postHandle 在渲染前走拦截器，用于将数据推入模板进行渲染
-    void postHandle(HttpServletRequest var1, HttpServletResponse var2, Object var3, ModelAndView var4) throws Exception;
-
-    // afterCompletion 所有请求结束后走拦截器，用于将之前生成的数据删除
-    void afterCompletion(HttpServletRequest var1, HttpServletResponse var2, Object var3, Exception var4) throws Exception;
-}
-```
-
-注册拦截器到链路上
-
-```java
-@Component
-public class WendaWebConfiguration extends WebMvcConfigurerAdapter {
-    @Autowired
-    PassportInterceptor passportInterceptor;
-
-    @Autowired
-    LoginRequiredInterceptor loginRequiredInterceptor;
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(passportInterceptor);
-        registry.addInterceptor(loginRequiredInterceptor).addPathPatterns("user/*");
-        super.addInterceptors(registry);
-    }
-}
-```
-
-#### Ajax请求
-
-ajax请求(异步的JavaScript请求)，不是提交到页面，而是提交到后台，后台返回一个json格式字符串后，再进行动态的刷新处理(翻页时不刷新页面，直接从json格式字符串中提取信息替换掉)
+防止 xss 注入直接使用 HTMLutils 工具类封装的方法即可
 
 #### 敏感词过滤
 
-```java
-public String filter(String text) {
-    if (StringUtils.isBlank(text)) {
-        return text;
-    }
-    String replacement = DEFAULT_REPLACEMENT;
-    StringBuilder result = new StringBuilder();
+读取一份保存敏感词的文本文件来初始化敏感词字典树，遍历UGC的每个字符，判断以该字符开始的字符串是否是敏感词，是则进行打码处理，实现敏感词过滤。然后将过敏感词过滤作为一个service，让需要过滤敏感词的服务进行调用
 
-    TrieNode curNode = rootNode;
-    int begin = 0;
-    int position = 0;
+## 发表评论和站内信
 
-    while (position < text.length()) {
-        char c = text.charAt(position);
-        if (isSymbol(c)) {
-            // 如果符号在敏感词中间就跳过，否则加入
-            if (begin == position) {
-                result.append(c);
-                begin++;
-            }
-            position++;
-            continue;
-        }
-        curNode = curNode.getSubNode(c);
-        // 以begin开始的字符串不是敏感词
-        if (curNode == null) {
-            result.append(text.charAt(begin));
-            begin++;
-            position = begin;
-            curNode = rootNode;
-        // 从begin到position之间的字符串是敏感词
-        } else if (curNode.isKeywordEnd()) {
-            result.append(replacement);
-            position++;
-            begin = position;
-        //  从begin到position之间的字符串不确定是否是敏感词
-        } else {
-            position++;
-        }
-    }
+#### 通用的新模块开发流程
 
-    // 加入最后一段非完整敏感词文本
-    result.append(text.substring(begin));
+1. Database column：业务模型设计数据库字段
 
-    return result.toString();
-}
-```
+2. Model：定义模型，和数据库相匹配
 
-#### 多线程
+3. DAO：数据读取
 
-- Thread
+4. Service：服务包装
 
-    1. extends Thread，重载run()方法
-    2. implements Runnable()，实现run()方法
+5. Controller：业务入口
 
-```java
-new Thread(new Runnable() {
-    @Override
-    public void run() {
-        Random random = new Random();
-        for (int i = 0; i < 10; ++i) {
-            sleep(random.nextInt(1000));
-            System.out.println(String.format("T%d : %d", tid, i));
-        }
-    }
-}, String.valueOf(i)).start();  
-```
+6. Test
 
-- Synchronized－内置锁
+#### 评论中心和消息中心
 
-    1. 放在方法上会锁住所有synchronized方法
-    2. synchronized(obj) 锁住相关的代码段
+统一评论服务，在数据库中建立表 comment 表来存储每个实体的评论(问题的评论、评论的评论...)。每一个问题下面都有评论，显示评论数量，具体内容，发布评论的用户等信息。发布评论时，需要更新该问题的评论数，要求同时更新 comment 表和 question 表(更新表中的content_count，冗余的数据项用于问题页面显示评论数，只需查找question表)，使用事务保证两个表的更新同时成功或失败，本项目使用redis做成异步更新评论数
 
-```java
-public static void testSynchronized1() {
-    synchronized (obj) {
-        Random random = new Random();
-        for (int i = 0; i < 10; ++i) {
-            sleep(random.nextInt(1000));
-        }
-    }
-}
-```
+在数据库中建立表 message 表来存储每条站内信。每两个用户之间的站内信，会有一个唯一的conversation_id，通过conversation_id可以选出两用户之间所有的站内信，用于实现私信详情页面；通过数据库 group by 操作可以获取当前用户与其他用户之间站内信的最新一条，用于实现私信列表页面
 
-- BlockingQueue 同步队列
+站内信分为两种：
 
-多线程访问的队列，用于实现异步处理
+- 轮询，每隔一段时间去服务器上查询有无新的站内信，可以直接从数据库中读取(与查询不同，读取像timeline中的pull)
 
-- ThreadLocal
+- 长连接，websocket一直连接服务器，一旦有新的站内信，服务器主动通知，站内信可以第一时间知道
 
-    1. 线程局部变量。即使是一个static成员，每个线程访问的变量是不同的
-    2. 常见于web中存储当前用户到一个静态工具类中，在线程的任何地方都可以访问到当前线程的用户
-    3. 参考HostHolder.java里的users
+## 赞踩实现
 
-- Executor
+点赞点踩功能(给评论点赞踩、给问题点赞踩...)不关注发生时间和顺序，所以使用redis的两个集合记录所有点赞点踩的人，用于判断用户点赞点踩与否和获取该实体(评论、问题...)点赞点踩的总人数
 
-Executor是一个任务框架，将各种任务提交进来，它会根据已有的线程(可以是一个线程或线程池)，一个个去执行
+根据业务确定唯一的 key 与之对应，格式：前缀是业务用分隔符与参数结合起来
 
-```java
-ExecutorService service = Executors.newSingleThreadExecutor(); // 单线程任务框架
-ExecutorService service = Executors.newFixedThreadPool(2); // 多线程任务框架
-// 提交任务
-service.submit(new Runnable() {
-    @Override
-    public void run() {
-        for (int i = 0; i < 10; ++i) {
-            sleep(1000);
-            System.out.println("Execute %d" + i);
-        }
-    }
-});
+如点赞："LIKE" + ":" + entityType + ":" + entityId
 
-// 在任务结束后关闭线程
-service.shutdown();
-```
+## 异步消息机制与邮件发送
 
-- Atomic(原子性操作)
+在之前的功能中有一些不需要实时执行的操作或者任务，可以异步处理，提高网站性能
 
-在进行多线程操作时，线程安全
+#### 单向队列实现异步
 
-```java
-// 线程安全变量
-private static AtomicInteger atomicInteger = new AtomicInteger(0);
+生产者：操作(点赞踩，评论...)触发事件，将事件包装成 Event，序列化后加入 redis 的单向队列
 
-public static void testWithAtomic() {
-    for (int i = 0; i < 10; ++i) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(1000);
-                    for (int j = 0; j < 10; ++j) {
-                        System.out.println(atomicInteger.incrementAndGet());
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
-}
-```
+消费者：从单向队列中取出 Event，使用对应 handler 处理
 
-- Future
+![img](https://github.com/A11Might/A11Might.github.io/blob/master/img/nowcoder2016/1_1_1.jpg)
 
-实现线程与线程之间的通信(线程与线程数据传递)
+#### 邮件发送
 
-```java
-public static void testFuture() {
-    ExecutorService service = Executors.newSingleThreadExecutor();
-    // 返回异步结果
-    Future<Integer> future = service.submit(new Callable<Integer>() {
-        @Override
-        public Integer call() throws Exception {
-            //Thread.sleep(1000);
-            // 任务中抛出异常，阻塞等待任务返回结果(future.get())，可以获取线程中的Exception
-            throw new IllegalArgumentException("异常");
-            //return 1;
-        }
-    });
+使用spring提供的模板实现邮件发送
 
-    service.shutdown();
-    try {
-        // 阻塞等待返回结果()
-        System.out.println(future.get());
-        // 阻塞等待返回结果()，有过期时间
-        //System.out.println(future.get(100, TimeUnit.MILLISECONDS));
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-}
-```
+## 关注和被关注服务实现
 
-#### redis
+- 使用Redis的zset存储每个实体(用户, 问题...)的的粉丝列表以及关注某个实体的关注列表，zset中每个元素有对应的score，可以储存关注发生的时间来排序元素，方便获取最近关注的粉丝或问题
 
-- redis.conf
+    每一个实体的粉丝列表以及关注某个实体的关注列表对应唯一key，用于用户向列表插入或删除元素，实现关注和取关功能
 
-```conf
-# after 900 sec (15 min) if at least 1 key changed
-save 900 1
+    - 对于粉丝列表，除了显示粉丝的基本信息之外，还要显示当前用户是否关注了这个粉丝，以便前端显示
 
-# 存储的文件
-dbfilename dump.rdb
-```
+    - 对于关注列表来说，如果被关注对象是用户的话，除了显示用户的基本信息之外，还要显示当前用户是被这个用户关注，以便前端显示
 
-RDB持久性按指定的时间间隔执行数据集的时间点快照
+    关注/取关功能有两个操作，向粉丝列表中添加/删除元素，向某个实体的关注列表中添加/删除元素，需要同时成功，所以使用Redis的事务multi来包装成事务再进行执行操作
 
-AOF持久性会记录服务器接收的每个写入操作，这些操作将在服务器启动时再次播放，以重建原始数据集
+- 实体被关注会收到站内信通知，关注成功时触发关注事件，异步使用handler处理
 
-- Jedis
+## 新鲜事
 
-Java对redis接口的包装，Redis官方推荐的Java库，官方网站：https://github.com/xetorthio/jedis
+#### timeline
 
-为了使用连接池，需要根据业务将jedis的操作包装成service
+- 事件触发产生新鲜事(如评论、关注...)
 
-```java
-public long sadd(String key, String value) {
-    Jedis jedis = null;
-    try {
-        jedis = pool.getResource();
-        return jedis.sadd(key, value);
-    } catch (Exception e) {
-        logger.error("发生异常" + e.getMessage());
-    } finally {
-        if (jedis != null) {
-            jedis.close();
-        }
-    }
-    return 0;
-}
-```
+- 粉丝新鲜事列表获取(push、pull、push and pull)
 
-- [Redis数据结构](https://github.com/A11Might/wenda/blob/master/src/main/java/com/nowcoder/util/RedisTest.java)
+    1. 推：事件触发后广播给所有的粉丝
+        - 对于粉丝数过多的事件后台压力较大，浪费存储空间
+        - 流程清晰，开发难度低，关注新用户需要同步新feed流
 
-- redis的使用
+    2. 拉：登录打开页面的时候根据关注的实体动态生成timeline内容
+        - 读取压力大
+        - 存储占用小，缓存最近读取的feed，根据时间分区拉去
 
-PV、点赞、关注、排行榜、验证码、缓存、异步队列、判题队列
+    3. 推拉：活跃/在线用户推，其他用户拉
+        - 降低存储空间，又满足大部分用户的读取需求
+
+- 各新鲜事自定义渲染(每条新鲜事不同，如评论问题、关注问题...)
+
+    1. timeline新鲜事统一存储，类似flyweight模式(享元模式：底层数据只有一份，所有用户公共去引用它)，存储事件的核心变量(不是渲染出来的html信息，而是原始数据)
+
+    2. 模板和变量整合渲染
+
+![img](https://github.com/A11Might/A11Might.github.io/blob/master/img/nowcoder2016/1_1_2.jpg)
+
+- 新鲜事排序显示
+
+- 广告推荐整合
+
+#### 实现
+
+使用feedhandler异步处理用户关注问题和评论问题两个新鲜事
+
+当上述事件发生时，根据具体事件构造新鲜事，包括：发起者，日期，新鲜事类型，新鲜事的具体内容，然后将该数据存入MySQL数据库的feed表中，并将新鲜事id存储当前用户所有粉丝的timeline中(本例使用Redis来存储某个用户接受的新鲜事id列表，称为 timeline，根据每个用户的唯一key来存储)
+
+pull：通过当前用户关注者的列表，从数据库中 `查找` 所有关注者产生的新鲜事
+
+push：通过当前用户timeline中的所有新鲜事id， `读取` 数据库中的新鲜事
