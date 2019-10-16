@@ -4,7 +4,9 @@
 
 - [abc](#abc)
 
-- [2.1 数据库字段的设计](#2.1-数据库字段的设计)
+- [数据库字段的设计](#数据库字段的设计)
+
+- [request/response](#request/response)
 
 - [Java 内存区域详解](#java-内存区域详解)
     - [JVM 运行时的数据区域](#jvm-运行时的数据区域)
@@ -95,7 +97,7 @@ public String template(Model model) { // model将数据传递到模板中
 ```
 
 
-#### 1.2 request/response
+#### request/response
 
 HttpServletRequest、HttpServletResponse是网页请求request和服务器返回信息response的包装
 
