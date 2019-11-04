@@ -6,7 +6,7 @@ tag: [backtrack, leetcode]
 
 排列组合相同又不同
 
-## 1. 排列
+### 1. 排列
 
 #### leetcode[[46](https://leetcode-cn.com/problems/permutations/)] [题解](https://github.com/A11Might/leetcode/blob/master/src/lc046.java)
 
@@ -48,7 +48,7 @@ private void dfs(int[] nums, int index, List<List<Integer>> ans) {
 {: .box-note}
 **Note:** 使用swap函数, 将从序列中选出的数字(选出要放置在当前位置的数字)与当前位置的数字交换位置, 这样的可以方便剩余数字的全排列(全排列数组[index + 1, length)即可), 最后得到的结果即为一种排列
 
-## 2. 组合
+### 2. 组合
 
 #### leetcode[[77](https://leetcode-cn.com/problems/combinations/)] [题解](https://github.com/A11Might/leetcode/blob/master/src/lc077.java)
 
@@ -91,6 +91,6 @@ private void dfs(int n, int index, int k, List<Integer> sublist, List<List<Integ
 {: .box-note}
 **剪枝:** 还有k - sublist.size()个空位，所以[1, n]中至少要有k - sublist.size()个元素, i最多为n - (k - sublist.size()) + 1(再大就没有足够的空位来找到k个数的组合)
 
-## 3. 其他
+### 3. 其他
 
 - [leetcode排列组合总结]()
