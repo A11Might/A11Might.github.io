@@ -45,7 +45,7 @@ public static int smallSumSure1(int[] arr) {
 
 先来看看归并排序，原理是将待排序列分为两个子序列，分别排序后，将两个有序子序列合并。在两个子序列S、M合并过程中，当S中元素A小于M中元素B时，因为M序列已经有序，所以不用比较，A一定是S、M两个子序列剩余元素中最小的元素，这省去了A与B后其他元素比较的操作。
 
-![Crepe](/img/post/xche.jpg){: .center-block :}
+![Crepe](/img/post/xche.png){: .center-block :}
 
 那小和问题怎么省去多余的比较操作？将原本题目反过来想：当前元素右侧序列每有一个比其大的元素，就有一个左边比当前数小的数即当前元素，维护一个变量res将其累加，如下：
 
