@@ -6,7 +6,7 @@ tags: [leetcode]
 
 使用广度优先遍历求无权图的最短路径
 
-### 1. 完全平方数 leetcode[[279]](https://leetcode-cn.com/problems/perfect-squares/) [题解](https://github.com/A11Might/leetcode/blob/master/codes/lc279.java)
+### 1. 完全平方数 leetcode[[279]](https://leetcode-cn.com/problems/perfect-squares/) [题解](https://github.com/A11Might/leetcode/blob/master/src/lc279.java)
 
 > 给定正整数 n，找到若干个完全平方数（比如 1, 4, 9, 16, ...）使得它们的和等于 n。你需要让组成和的完全平方数的个数最少。
 
@@ -48,7 +48,7 @@ public int numSquares(int n) {
 }
 ```
 
-### 2. 单词接龙 leeetcode[[127]](https://leetcode-cn.com/problems/word-ladder/) [题解](https://github.com/A11Might/leetcode/blob/master/codes/lc127.java)
+### 2. 单词接龙 leeetcode[[127]](https://leetcode-cn.com/problems/word-ladder/) [题解](https://github.com/A11Might/leetcode/blob/master/src/lc127.java)
 
 > 给定两个单词（beginWord 和 endWord）和一个字典，找到从 beginWord 到 endWord 的最短转换序列的长度。
 >
@@ -134,7 +134,7 @@ public int ladderLength(String beginWord, String endWord, List<String> wordList)
 }
 ```
 
-### 3. 单词接龙 II leeetcode[[126]](https://leetcode-cn.com/problems/word-ladder-ii/) [题解](https://github.com/A11Might/leetcode/blob/master/codes/lc126.java)
+### 3. 单词接龙 II leeetcode[[126]](https://leetcode-cn.com/problems/word-ladder-ii/) [题解](https://github.com/A11Might/leetcode/blob/master/src/lc126.java)
 
 > 给定两个单词（beginWord 和 endWord）和一个字典 wordList，找出所有从 beginWord 到 endWord 的最短转换序列。
 >
