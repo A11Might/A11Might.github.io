@@ -79,7 +79,7 @@ public class Solution {
 
 - 通过递归的形式重构出一棵真二叉树原本的结构
 
-#### leetcode[889] [题解](https://github.com/A11Might/leetcode/blob/master/codes/lc889.java)
+#### leetcode[889] [题解](https://github.com/A11Might/leetcode/blob/master/src/lc889.java)
 
 > 根据前序和后序遍历构造二叉树
 >
