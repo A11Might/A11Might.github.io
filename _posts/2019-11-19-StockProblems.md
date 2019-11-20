@@ -44,7 +44,7 @@ tags: [leetcode, dynamic programming]
 
 按照允许的最大交易次数将 6 个股票问题分类(最后两个问题含有附加要求如冷冻期或者手续费), 我将把通用解法应用到它们每一题上.
 
-#### [case I: k = 1](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/comments/)
+#### [case I: k = 1](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/)
 
 对于这个例子, 我们每天有两个未知的变量: T[i][1][0] 和 T[i][1][1], 它们的递推关系为: 
 
