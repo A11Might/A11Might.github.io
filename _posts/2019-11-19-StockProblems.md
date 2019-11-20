@@ -44,7 +44,7 @@ tags: [leetcode, dynamic programming]
 
 按照允许的最大交易次数将 6 个股票问题分类(最后两个问题含有附加要求如冷冻期或者手续费), 我将把通用解法应用到它们每一题上.
 
-#### case I: k = 1
+#### [case I: k = 1](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/comments/)
 
 对于这个例子, 我们每天有两个未知的变量: T[i][1][0] 和 T[i][1][1], 它们的递推关系为: 
 
@@ -71,7 +71,7 @@ public int maxProfit(int[] prices) {
 
 现在让我们深入了解上面的解法. 仔细观察循环体的内部, 会发现 T_i11 只是代表 0 到第 i 天中所有股票价格的负值中的最大值, 换句话说就是, 所有股票价格中的最小值. 至于 T_i10 就是, 在*第 i - 1 天获得的最大利润*和*以0 到第 i - 1 天中所有股票价格中的最小值买入后在以第 i 天的价格卖出获得的最大利润*中选出较大值, 即为第 i 天可以获得的最大利润.
 
-#### case II: k = 正无穷
+#### [case II: k = 正无穷](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-ii/)
 
 当 k 趋于正无穷时 k 等于 k - 1, 这意味 T[i - 1][k - 1][0] = T[i - 1][k][0] 和 T[i - 1][k - 1][1] = T[i - 1][k][1]. 每天的两个未知变量: T[i][k][0] 和 T[i][k][1] 在 k 趋于正无穷时, 它们的递推关系为:
 
@@ -99,7 +99,7 @@ public int maxProfit(int[] prices) {
 
 这个解法其实是使用贪心策略来获取最大利润: 在每个区间低价处购买股票，其后立刻在这个区间高价处出售(只要今天的价格大于昨天的价格就在昨天买入今天卖出, 累加可得获得的最大利润), 这相当于在 prices 中寻找上升子序列, 以每个子序列开始的价格买入再以最后的价格卖出.
 
-#### case III: k = 2
+#### [case III: k = 2](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iii/)
 
 和例 I: k = 1 类似, 只不过现在我们每天有四个变量: T[i][1][0], T[i][1][1], T[i][2][0], T[i][2][1], 它们的递推关系为: 
 
@@ -129,7 +129,7 @@ public int maxProfit(int[] prices) {
 }
 ```
 
-#### case IV: k = 任意整数
+#### [case IV: k = 任意整数](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-iv/)
 
 这是一个最一般化的例子, 我们需要更新每一天不同 k 值所对应的持有股票或者不持有股票最终可以获得的最大利润. 在这里我们可以进行一个小的优化, 当 k 超过临界值时, 最大利润不再依赖允许的交易次数, 但它还是会和总天数有关, 让我们来找出这个临界值.
 
@@ -166,7 +166,7 @@ public int maxProfit(int k, int[] prices) {
 }
 ```
 
-#### case V: k = 正无穷但含冷冻期
+#### [case V: k = 正无穷但含冷冻期](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/)
 
 这个例子与例 II 非常相似, 它们有相同的 k 值, 但是由于有冷冻期, 所以需要稍稍修改递推关系. 例 II 的递推关系为:
 
@@ -197,7 +197,7 @@ public int maxProfit(int[] prices) {
 }
 ```
 
-#### case VI: k = 正无穷但含手续费
+#### [case VI: k = 正无穷但含手续费](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/)
 
 这个例子也与例 II 非常相似, 它们有相同的 k 值, 但是由于有手续费, 所以需要稍稍修改递推关系. 例 II 的递推关系为:
 
