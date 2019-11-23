@@ -116,6 +116,6 @@ class Solution {
 ```
 ## 4. 其他
 
-- [leetcode树的重构总结](https://github.com/A11Might/leetcode/blob/master/category.md)
+- [leetcode树的重构总结](https://github.com/A11Might/leetcode/blob/master/navigate/category.md)
 
 - 参考：邓俊辉 - 数据结构
