@@ -380,6 +380,6 @@ public static void bfs(TreeNode root) {
 
 ## 三、其他
 
-- [leetcode树的遍历总结](https://github.com/A11Might/leetcode/blob/master/category.md)
+- [leetcode树的遍历总结](https://github.com/A11Might/leetcode/blob/master/navigate/category.md)
 
 - 参考：2018高级算法课 - 左神
