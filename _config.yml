@@ -22,11 +22,11 @@ description: My blog
 navbar-links:
   Home: "index"
   Tags: 
-    - All: "http://www.huqihh.com/tags/"
-    - Daily: "http://www.huqihh.com/tags/#daily"
-    - LeetCode: "http://www.huqihh.com/tags/#leetcode"
-    - Algorithm: "http://www.huqihh.com/tags/#algorithm"
-    - CodingInterview: "http://www.huqihh.com/tags/#codinginterview"
+    - All: "http://blog.huqihh.com/tags/"
+    - Daily: "http://blog.huqihh.com/tags/#daily"
+    - LeetCode: "http://blog.huqihh.com/tags/#leetcode"
+    - Algorithm: "http://blog.huqihh.com/tags/#algorithm"
+    - CodingInterview: "http://blog.huqihh.com/tags/#codinginterview"
   About Me: "aboutme"
 #   Resources:
 #     - Beautiful Jekyll: "http://deanattali.com/beautiful-jekyll/"
