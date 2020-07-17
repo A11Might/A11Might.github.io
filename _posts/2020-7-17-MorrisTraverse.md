@@ -60,7 +60,7 @@ TreeNode cur = root;
 
 示例如下图：
 
-![1_34ffc8ea59-微信图片_20180517233543](1_34ffc8ea59-微信图片_20180517233543.jpg)
+![morris](https://github.com/A11Might/A11Might.github.io/blob/master/img/post/morristraverse.jpg)
 
 #### 例题 [99. 恢复二叉搜索树](https://leetcode-cn.com/problems/recover-binary-search-tree/)
 
