@@ -2,12 +2,8 @@
 # https://github.com/riggraz/no-style-please#customize-the-menu
 
 entries:
-  - title: me
+  - title: info
     entries:
-      - title: email
-        url: mailto:qihanghu@foxmail.com
-      - title: github
-        url: https://github.com/a11might
       - title: about me
         url: about
 
@@ -21,4 +17,7 @@ entries:
   - title: tags
     url: tags
 
-  - title: use theme no-style-please by <a href='https://github.com/riggraz/no-style-please'>riggraz</a>
+  - title: thanks
+    entries:
+      - title: use blog theme <a href='https://riggraz.dev/no-style-please/'>no-style-please</a>
+      - title: use comment system <a href='https://giscus.app/zh-CN'>giscus</a>

@@ -14,7 +14,12 @@ Lorem ipsum[^1] dolor sit amet, consectetur adipiscing elit. Pellentesque vel la
 
 Mauris viverra dictum ultricies. Vestibulum quis ipsum euismod, facilisis metus sed, varius ipsum. Donec scelerisque lacus libero, eu dignissim sem venenatis at. Etiam id nisl ut lorem gravida euismod.
 
-## Lists
+## Table of contents
+- [Table of contents](#table-of-contents)
+- [Lists](#lists)
+- [Blockquote](#blockquote)
+
+## [Lists](#lists)
 
 Unordered:
 
