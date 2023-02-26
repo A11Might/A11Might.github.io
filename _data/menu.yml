@@ -17,6 +17,9 @@ entries:
   - title: tags
     url: tags
 
+  - title: rss
+    url: feed.xml
+
   - title: thanks
     entries:
       - title: use blog theme <a href='https://riggraz.dev/no-style-please/'>no-style-please</a>
