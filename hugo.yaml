@@ -9,6 +9,8 @@ enableRobotsTXT: true
 buildDrafts: false
 buildFuture: false
 buildExpired: false
+enableInlineShortcodes: true
+enableEmoji: true
 
 googleAnalytics: UA-123-45
 
@@ -36,7 +38,7 @@ params:
 
   ShowReadingTime: true
   ShowShareButtons: false
-  ShowPostNavLinks: true
+  ShowPostNavLinks: false
   ShowBreadCrumbs: true
   ShowCodeCopyButtons: true
   ShowWordCount: true
