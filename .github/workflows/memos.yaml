@@ -1,0 +1,35 @@
+name: sync memos
+
+on:
+  # run automatically every 24 hours
+  schedule:
+    - cron: "0 17 * * *" # 北京时间次日凌晨1:00 (UTC+8)
+
+  # allows to manually run the job at any time
+  workflow_dispatch:
+
+jobs:
+  sync:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.24.2"
+
+      - name: generate memos
+        run: go run ./assets/memos/main.go
+        env:
+          MEMOS_HOST: ${{ secrets.MEMOS_HOST }}
+
+      - name: push changes
+        run: |
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          git add .
+          git commit -m "Add new memos" || echo "No changes to commit"
+          git push
