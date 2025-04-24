@@ -2,7 +2,7 @@ baseURL: "https://a11might.github.io/"
 languageCode: zh-cn
 title: Kohath's Reflections
 copyright: "© 2025 [Qihang Hu](https://a11might.github.io)"
-paginate: 5
+pagination.pagerSize: 5
 theme: PaperMod
 
 enableRobotsTXT: true
@@ -11,8 +11,6 @@ buildFuture: false
 buildExpired: false
 enableInlineShortcodes: true
 enableEmoji: true
-
-googleAnalytics: UA-123-45
 
 minify:
   disableXML: true
