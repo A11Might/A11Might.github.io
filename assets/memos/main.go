@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"sort"
+	"strings"
 	"time"
 )
 
@@ -137,7 +138,7 @@ ShowBreadCrumbs: false
 
 		// 添加标题和内容
 		readmeContent += fmt.Sprintf("### %s\n\n", formattedDate)
-		readmeContent += fmt.Sprintf("%s\n\n", memo.Content)
+		readmeContent += fmt.Sprintf("%s\n\n", strings.ReplaceAll(memo.Content, "\n", "\n\n"))
 	}
 
 	// 9. 保存到README.md
