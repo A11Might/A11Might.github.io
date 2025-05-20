@@ -1,5 +1,13 @@
 [
   {
+    "name": "memos/iM2uuyVM9tcx3DgqWWw6wH",
+    "displayTime": "2025-05-20T00:19:37Z",
+    "content": "[Side Projects](https://naeemnur.com/side-projects)\n\u003e My one tip is to use the tech stack you are most familiar with; don’t get lost in the frameworks rabbit hole. People don’t care what stack you’ve used to build it. Keep building!\n不要掉进兔子洞，专注做要做的事\n#2025\n",
+    "tags": [
+      "2025"
+    ]
+  },
+  {
     "name": "memos/JpZq797FTfzjQcQEcUvJFz",
     "displayTime": "2025-05-14T14:22:52Z",
     "content": "[AI Is Like a Crappy Consultant](https://lukekanies.com/writing/ai-is-like-a-crappy-consultant/)\n\u003e My first try used Cursor, and let it edit everything.\n\u003e After a few iterations, I had a bare-bones application. But… I felt like I was pushing around a bag full of bolts. There was definitely stuff in there. But I didn’t even know how to think about the changes I needed, because I didn’t understand enough.\n使用 ai 写前端时深有感受（我是谁 and 我在哪）。正确的做法是像作者说的那样：把 ai 当作一个不值得信任的顾问，而不是把事交给它就完了。\n#2025 #AI",
