@@ -32,6 +32,7 @@ type APIResponse struct {
 
 func main() {
 	// 1. 获取API数据
+	// 只会获取最新的 10 条 memo，也就是说只有最新的 10 条 memo 会在每次脚本触发时更新内容
 	memosHost := os.Getenv("MEMOS_HOST")
 	if memosHost == "" {
 		fmt.Println("警告: 未设置MEMOS_HOST环境变量")
@@ -138,7 +139,10 @@ ShowBreadCrumbs: false
 
 		// 添加标题和内容
 		readmeContent += fmt.Sprintf("### %s\n\n", formattedDate)
-		readmeContent += fmt.Sprintf("%s\n\n", strings.ReplaceAll(memo.Content, "\n", "\n\n"))
+		memoContent := strings.ReplaceAll(memo.Content, "\n", "\n\n")
+		memoContent = strings.ReplaceAll(memoContent, "\n>", ">")
+		memoContent = strings.Replace(memoContent, ">", "\n>", 1)
+		readmeContent += fmt.Sprintf("%s\n\n", memoContent)
 	}
 
 	// 9. 保存到README.md
