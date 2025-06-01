@@ -3,6 +3,7 @@ date: '2025-01-25T21:30:36+08:00'
 draft: false
 enableEmoji: true
 title: 'Oh Shit, Git!?! But Lazy.'
+tags: ['Git']
 ---
 
 > 原文是 [Oh Shit, Git!?!](https://ohshitgit.com/zh)，但命令还是太长啦，对它使用 [Lazygit](https://github.com/jesseduffield/lazygit) 🧑‍🚀🚀。
