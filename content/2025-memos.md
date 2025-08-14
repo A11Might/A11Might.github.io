@@ -1,0 +1,69 @@
++++
+title = "2025"
+menu = "main"
+weight = 100
++++
+
+### 2025-05-24
+
+[Root for Your Friends](https://josephthacker.com/personal/2025/05/13/root-for-your-friends.html)
+
+> This is a two way street. You can’t expect your friends to root for you if you don’t root for them. Here’s how you can do that:
+> - Be quick to praise: Train your first instinct to praise. 
+> - Be tactfully honest: Good people value constructive criticism deeply. 
+> - Expand their vision – “That’s awesome… and imagine if you… and have you seen this…?”
+> - Signal‑Boost – Shares and like their stuff all the time and ask them to tell you when they post.
+
+朋友飞轮
+
+#2025
+
+### 2025-05-23
+
+[MCP explained without hype or fluff](https://blog.nilenso.com/blog/2025/05/12/mcp-explained-without-hype-or-fluff/)
+
+> So let’s revisit what MCP brings to the table:  > Turns M ⨯ N integration problem by turning it into an M + N integration problem.
+> Decouples AI client applications from AI tools and workflows for a platform.
+
+#2025 #AI
+
+### 2025-05-20
+
+[Side Projects](https://naeemnur.com/side-projects)
+
+> My one tip is to use the tech stack you are most familiar with; don’t get lost in the frameworks rabbit hole. People don’t care what stack you’ve used to build it. Keep building!
+
+不要掉进兔子洞，专注做要做的事
+
+#2025
+
+
+
+### 2025-05-14
+
+[AI Is Like a Crappy Consultant](https://lukekanies.com/writing/ai-is-like-a-crappy-consultant/)
+
+> My first try used Cursor, and let it edit everything.
+> After a few iterations, I had a bare-bones application. But… I felt like I was pushing around a bag full of bolts. There was definitely stuff in there. But I didn’t even know how to think about the changes I needed, because I didn’t understand enough.
+
+使用 ai 写前端时深有感受（我是谁 and 我在哪）。正确的做法是像作者说的那样：把 ai 当作一个不值得信任的顾问，而不是把事交给它就完了。
+
+#2025 #AI
+
+### 2025-04-23
+
+#### [Coding as Craft: Going Back to the Old Gym · cekrem.github.io](https://cekrem.github.io/posts/coding-as-craft-going-back-to-the-old-gym/) 
+
+> In the context of coding, our “old gym” is the mental space where we wrestle directly with problems, algorithms, and architectures without the cushion of AI generating solutions for us.
+
+现在遇到问题，条件反射似的就想问 chatGPT，好久没有感受到复杂度带来的多巴胺了。Let’s get outta here, back to the old gym! 🏋️
+
+#2025 #AI
+
+### 2025-04-19
+
+#### [Link blog in a static site – Redowan Delowar](https://rednafi.com/misc/link_blog/) 
+
+Redowan 在博客上记录日常，比如做的事、读的书和看的演讲，还加了评论或引用。这样一方面在年终回顾时有成就感，另外定期写东西也能督促自己去多做、多读。文章最后也说了这个方案足够简单、有效，看着满满的记录很满足。当然，别写自己都不愿意看的东西。
+
+#2025

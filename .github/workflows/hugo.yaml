@@ -3,8 +3,8 @@ name: Deploy Hugo site to Pages
 
 on:
   # run automatically every 24 hours
-  schedule:
-    - cron: "30 17 * * *" # 北京时间次日凌晨1:30 (UTC+8)
+  # schedule:
+  #   - cron: "30 17 * * *" # 北京时间次日凌晨1:30 (UTC+8)
 
   # Runs on pushes targeting the default branch
   push:
