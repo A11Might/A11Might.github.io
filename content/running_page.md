@@ -6,7 +6,7 @@ weight = 200
 
 # 我的跑步日记
 
-**最后更新**: 2025年8月21日
+**最后更新**: 2025年8月24日
 
 ![2025 Running Summary](https://raw.githubusercontent.com/A11Might/GitHubPoster/refs/heads/main/OUT_FOLDER/strava.svg)
 
@@ -51,3 +51,4 @@ weight = 200
 |---|---|---|---|---|
 | **2025** | 124.29 | 7.87' | 16.30 | 39 |
 | **2024** | 93.58 | 7.38' | 11.52 | 20 |
+| **2023** | 159.41 | 7.25' | 19.25 | 36 |
