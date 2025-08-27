@@ -30,4 +30,32 @@
     pre {
         font-family: "LXGW WenKai", monospace !important;
     }
+    
+    /* 修复内联代码背景色 */
+    code {
+        background-color: #f2f2f2 !important;
+        color: #222 !important;
+    }
+    
+    /* 禁用 dark mode，强制使用 light mode */
+    :root {
+        --background-color: #fff !important;
+        --heading-color: #222 !important;
+        --text-color: #444 !important;
+        --link-color: #3273dc !important;
+        --visited-color: #8b6fcb !important;
+        --blockquote-color: #222 !important;
+    }
+    
+    /* 覆盖 dark mode 媒体查询 */
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --background-color: #fff !important;
+            --heading-color: #222 !important;
+            --text-color: #444 !important;
+            --link-color: #3273dc !important;
+            --visited-color: #8b6fcb !important;
+            --blockquote-color: #222 !important;
+        }
+    }
 </style>
