@@ -6,7 +6,7 @@ weight = 200
 
 # 我的跑步日记
 
-**最后更新**: 2025年10月5日
+**最后更新**: 2025年10月6日
 
 ![2025 Running Summary](https://raw.githubusercontent.com/A11Might/GitHubPoster/refs/heads/main/OUT_FOLDER/strava.svg)
 
