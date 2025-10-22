@@ -102,6 +102,14 @@ func main() {
 		fmt.Printf("解析 API: %s 数据失败: %v\n", apiURL, err)
 		return
 	}
+	// 过滤出跑步数据
+	var tmp []RunningActivity
+	for _, activity := range apiResponse {
+		if activity.SportType == "Run" {
+			tmp = append(tmp, activity)
+		}
+	}
+	apiResponse = tmp
 	if len(apiResponse) == 0 {
 		fmt.Printf("没有新的跑步数据需要更新")
 		return
@@ -115,9 +123,6 @@ func main() {
 	}
 	// 再添加新数据（如有重复，会覆盖旧数据）
 	for _, activity := range apiResponse {
-		if activity.SportType != "Run" {
-			continue // 只处理跑步活动
-		}
 		activityMap[activity.Id] = activity
 	}
 	// 将 map 转回切片
