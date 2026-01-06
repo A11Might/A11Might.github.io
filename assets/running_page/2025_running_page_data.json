@@ -1,5 +1,21 @@
 [
   {
+    "id": 16954915997,
+    "start_date": "2026-01-06T10:53:26Z",
+    "distance": 4093.4,
+    "moving_time": 1988,
+    "elapsed_time": 1988,
+    "total_elevation_gain": 11,
+    "sport_type": "Run",
+    "average_speed": 2.059,
+    "max_speed": 2.68,
+    "has_heartrate": true,
+    "average_heartrate": 139.9,
+    "max_heartrate": 150,
+    "elev_high": 40.6,
+    "elev_low": 35.2
+  },
+  {
     "id": 15888402553,
     "start_date": "2025-09-21T12:30:18Z",
     "distance": 5039.7,
