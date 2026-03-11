@@ -16,27 +16,13 @@
     integrity="sha384-bHBqxz8fokvgoJ/sc17HODNxa42TlaEhB+w8ZJXTc2nZf1VgEaFZeZvT4Mznfz0v" crossorigin="anonymous"
     onload="renderMathInElement(document.body, {delimiters: window.myDelimiters});"></script>
 
-<!-- 自定义字体样式：统一使用霞鹜文楷，monospace兜底 -->
-<link href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css" rel="stylesheet">
 <style>
-    /* 统一字体设置：霞鹜文楷为主，monospace兜底 */
-    body,
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    pre {
-        font-family: "LXGW WenKai", monospace !important;
-    }
-    
     /* 修复内联代码背景色 */
     code {
         background-color: #f2f2f2 !important;
         color: #222 !important;
     }
-    
+
     /* 禁用 dark mode，强制使用 light mode */
     :root {
         --background-color: #fff !important;
@@ -46,7 +32,7 @@
         --visited-color: #8b6fcb !important;
         --blockquote-color: #222 !important;
     }
-    
+
     /* 覆盖 dark mode 媒体查询 */
     @media (prefers-color-scheme: dark) {
         :root {
