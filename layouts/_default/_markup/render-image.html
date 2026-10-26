@@ -1,0 +1,8 @@
+{{- /* Markdown 图片渲染钩子：src 以 #center 结尾时居中显示，并从最终 src 中移除该后缀。
+     注意 Hugo 的 strings.TrimSuffix 参数顺序是 (后缀, 字符串) */ -}}
+{{- $dest := .Destination -}}
+{{- $center := strings.HasSuffix $dest "#center" -}}
+{{- if $center -}}
+  {{- $dest = strings.TrimSuffix "#center" $dest -}}
+{{- end -}}
+<img src="{{ $dest | safeURL }}" alt="{{ .PlainText }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ if $center }} class="img-center"{{ end }} loading="lazy" />

@@ -30,19 +30,58 @@ tags = []
 
 在 xy 平面上，点 (x, y) 绕[^3]圆心 $(R_2, 0, 0)$ 旋转一圈，得到一个半径为 $R_1$ 的圆，假设旋转角度为 $\theta$，则圆上每个点的坐标为：
 
-![torus_cross_section](/images/formula_1.svg#center)
+$$
+(x, y, z) = (R_2, 0, 0) + (R_1 \cos\theta, R_1 \sin\theta, 0)
+$$
 
 再让圆绕 y 轴旋转另一个角度 $\phi$，则环面上每个点的坐标为[^4]：
 
-![torus_cross_section](/images/formula_2.svg#center)
+$$
+(R_2 + R_1 \cos\theta, R_1 \sin\theta, 0)
+\cdot
+\begin{pmatrix}
+\cos\phi & 0 & \sin\phi \\
+0 & 1 & 0 \\
+-\sin\phi & 0 & \cos\phi \\
+\end{pmatrix}
+$$
 
 如果我们想要动画中整个甜甜圈绕着两个轴转动，假设绕 x 轴转动的角度是 A，绕 y 轴转动的角度是 B，则环面上每个点的坐标为：
 
-![torus_cross_section](/images/formula_3.svg#center)
+$$
+(R_2 + R_1 \cos\theta, R_1 \sin\theta, 0)
+\cdot
+\begin{pmatrix}
+\cos\phi & 0 & \sin\phi \\
+0 & 1 & 0 \\
+-\sin\phi & 0 & \cos\phi \\
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+1 & 0 & 0 \\
+0 & \cos A & \sin A \\
+0 & -\sin A & \cos A \\
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+\cos B & \sin B & 0 \\
+-\sin B & \cos B & 0 \\
+0 & 0 & 1 \\
+\end{pmatrix}
+$$
 
 把上面的矩阵乘开，我们就获得了，以原点为中心，绕着 x、y 轴旋转的甜甜圈上所有的点：
 
-![torus_cross_section](/images/formula_4.svg#center)
+$$
+\left( \begin{matrix} x \\ y \\ z \end{matrix} \right) =
+\left( \begin{matrix}
+ (R_2 + R_1 \cos \theta) (\cos B \cos \phi + \sin A \sin B \sin \phi) -
+   R_1 \cos A \sin B \sin \theta \\
+ (R_2 + R_1 \cos \theta) (\cos \phi \sin B - \cos B \sin A \sin \phi) +
+   R_1 \cos A \cos B \sin \theta \\
+ \cos A (R_2 + R_1 \cos \theta) \sin \phi + R_1 \sin A \sin \theta
+\end{matrix} \right)
+$$
 
 获得甜甜圈后，我们要把它显示在屏幕上。这是侧视图，一个人在 2D 屏幕前观看后面的 3D 物体：
 
@@ -50,15 +89,21 @@ tags = []
 
 假设人到屏幕的距离是 $K_1$，人到物体的距离是 $K_2$，为了在 2D 屏幕上渲染 3D 物体，我们将 3D 空间中的每个点 (x, y, z)，映射到屏幕 (x', y', z')上。人眼、屏幕和人眼、Y 轴形成了两个三角形，它们的关系是：
 
-![torus_cross_section](/images/formula_5.svg#center)
+$$
+\frac{y'}{y} = \frac{K_1}{K_2 + z}
+$$
 
 推导出：
 
-![torus_cross_section](/images/formula_6.svg#center)
+$$
+y' = \frac{K_1 y}{K_2 + z}
+$$
 
 同理可得 x'（想象俯视图），所以屏幕上每个点的坐标为：
 
-![torus_cross_section](/images/formula_7.svg#center)
+$$
+(x', y') = \left(\frac{K_1 x}{K_2 + z}, \frac{K_1 y}{K_2 + z}\right)
+$$
 
 当我们绘制大量点时，可能在相同位置 (x', y') 上绘制甜甜圈上不同位置的点。它们离屏幕的距离（深度）不同，所以我们要维护一个[深度缓冲](https://zh.wikipedia.org/wiki/%E6%B7%B1%E5%BA%A6%E7%BC%93%E5%86%B2)，来存储我们绘制的点的 Z 坐标[^5]，在绘制前判断当前位置是否绘制过。
 
@@ -74,13 +119,38 @@ N 是需要计算亮度的点的[法线](https://zh.wikipedia.org/wiki/%E6%B3%95
 
 单位圆上的起始点为 $(cos\theta, sin\theta, 0)$，进行相同的转动，表面法线 $(N_x, N_y, N_z)$ 为：
 
-![torus_cross_section](/images/formula_8.svg#center)
+$$
+(N_x, N_y, N_z) =
+(\cos\theta, \sin\theta, 0)
+\cdot
+\begin{pmatrix}
+\cos\phi & 0 & \sin\phi \\
+0 & 1 & 0 \\
+-\sin\phi & 0 & \cos\phi \\
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+1 & 0 & 0 \\
+0 & \cos A & \sin A \\
+0 & -\sin A & \cos A \\
+\end{pmatrix}
+\cdot
+\begin{pmatrix}
+\cos B & \sin B & 0 \\
+-\sin B & \cos B & 0 \\
+0 & 0 & 1 \\
+\end{pmatrix}
+$$
 
 这也是甜甜圈的表面法线，再将光源放置在人的后上方 (0, 1, -1)，就可以计算出亮度：
 
-![torus_cross_section](/images/formula_9.svg#center)
+$$
+L = (N_x, N_y, N_z) \cdot (0, 1, -1)
+$$
 
-![torus_cross_section](/images/formula_10.svg#center)
+$$
+L = \cos\phi \cos\theta \sin B - \cos A \cos\theta \sin\phi - \sin A \sin\theta + \cos B (\cos A \sin\theta - \cos\theta \sin A \sin\phi)
+$$
 
 我们只考虑表面朝向光源的情况（$L \in [-\sqrt{2}, \sqrt{2}]$[^7]，取 L > 0），为了将 L 与表示亮度的 11 个 ASCII 字符一一映射，将 $L \times 8$，值域扩大为 [0, 11]。
 

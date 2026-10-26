@@ -67,3 +67,10 @@ ignoreErrors = ["error-disable-taxonomy"]
   [markup.goldmark]
     [markup.goldmark.renderer]
       unsafe = true
+    # 将 $$...$$ / $...$ / \(..\) / \[...\] 中的内容原样传给页面上的 KaTeX，
+    # 避免矩阵换行符 \\ 等 LaTeX 语法被 Markdown 渲染器转义掉
+    [markup.goldmark.extensions.passthrough]
+      enable = true
+      [markup.goldmark.extensions.passthrough.delimiters]
+        block = [['$$', '$$'], ['\[', '\]']]
+        inline = [['$', '$'], ['\(', '\)']]

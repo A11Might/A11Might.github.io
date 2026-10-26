@@ -17,6 +17,21 @@
     onload="renderMathInElement(document.body, {delimiters: window.myDelimiters});"></script>
 
 <style>
+    /* KaTeX 公式在窄屏（手机）上可横向滚动，避免宽公式撑破页面 */
+    .katex-display {
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        padding: 2px 0;
+    }
+
+    /* 图片居中（markdown 中 src 带 #center 后缀时生效） */
+    .img-center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
     /* 修复内联代码背景色 */
     code {
         background-color: #f2f2f2 !important;
