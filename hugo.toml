@@ -9,7 +9,7 @@ theme = 'hugo-bearblog'
 title = "ʕ•ᴥ•ʔ Kohath's Reflections"
 author = "QiHang Hu"
 copyright = "Copyright © 2025, QiHang Hu."
-languageCode = "zh-CN"
+locale = "zh-CN"
 
 # Generate a nice robots.txt for SEO
 enableRobotsTXT = true
